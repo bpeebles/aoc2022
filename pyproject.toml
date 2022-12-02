@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bpeebles_aoc2022"
+version = "0.1.0"
+dependencies = [
+    "typer"
+]
+
+[project.scripts]
+aoc2022 = "cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
