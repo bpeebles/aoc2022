@@ -1,3 +1,5 @@
+from collections import Counter, defaultdict
+
 sample = \
 """1000
 2000
@@ -15,19 +17,33 @@ sample = \
 10000"""
 
 
-def run(src):
+def get_rows(src):
     if not src:
         data = sample
     else:
         data = open(src, "r").read()
-    rows = data.split("\n")
+    rows = [d.strip() for d in data.split("\n")]
 
-    peak = cur = 0
+    return rows
+
+def get_elves(src):
+    rows = get_rows(src)
+    elves = defaultdict(int)
+    elf = 0
     for line in rows:
-        if not line.strip():
-            if cur > peak:
-                peak = cur
-            cur = 0
+        if not line:
+            elf += 1
         else:
-            cur += int(line.strip())
-    print(peak)
+            elves[elf] += int(line)
+    c = Counter(elves)
+    return c
+
+
+def part1(src):
+    elves = get_elves(src)
+    print(elves.most_common(1)[0][1])
+
+
+def part2(src):
+    elves = get_elves(src)
+    print(sum(item[1] for item in elves.most_common(3)))
